@@ -1,12 +1,11 @@
 import * as express from 'express';
 
 const app = express();
-const port = process.argv[2] || 58808;
-
+const port = process.env.PORT;
 app.get('/*', (req, res) => {
     const path = decodeURI(req.path.slice(1));
     const num = parseInt(path);
-    let date: Date;
+    let date;
     if (!isNaN(num)) {
         date = new Date(num);
     } else {
@@ -16,5 +15,5 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Listening on '+port+'!');
+    console.log('Listening on '+port+'! '+ new Date(Date.now()));
 });
