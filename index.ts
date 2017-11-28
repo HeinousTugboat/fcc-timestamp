@@ -1,13 +1,18 @@
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 
 const app = express();
 const port = process.argv[2] || 58808;
 
-app.use(bodyParser.json());
 app.get('/*', (req, res) => {
-    console.log('foo');
-    res.send({name: 'foo', body: req.body, params: req.params});
+    const path = decodeURI(req.path.slice(1));
+    const num = parseInt(path);
+    let date: Date;
+    if (!isNaN(num)) {
+        date = new Date(num);
+    } else {
+        date = new Date(path);
+    }
+    res.send({unix: date.getTime(), natural: date.toLocaleDateString()});
 });
 
 app.listen(port, () => {
