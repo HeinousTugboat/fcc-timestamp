@@ -11,7 +11,8 @@ app.get('/*', (req, res) => {
     } else {
         date = new Date(path);
     }
-    res.send({unix: date.getTime(), natural: date.toLocaleDateString()});
+    // res.send({unix: date.getTime(), natural: date.toLocaleDateString()});
+    res.send({unix: (date && date.getTime() || null), natural: (date == 'Invalid Date' ? null : date.toLocaleDateString())});
 });
 
 app.listen(port, () => {
